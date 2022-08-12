@@ -7,6 +7,6 @@ A instagram bot that automatically post a randomized daily quote from a series o
 - Python3 
 - Beautiful Soup Library
 - PIL Library
-- Instagram API
+- [Instagram API](https://www.npmjs.com/package/instagram-private-api)
 
 ### Functionality
