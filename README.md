@@ -6,15 +6,17 @@ A instagram bot that automatically post a randomized daily quote from a series o
 ## Dependencies
 
 - Python3
-- Beautiful Soup Library
-- PIL Library
+- [Beautiful Soup Library](https://beautiful-soup-4.readthedocs.io/en/latest/)
+- [PIL Library](https://pillow.readthedocs.io/en/stable/)
 - [Instagram API](https://www.npmjs.com/package/instagram-private-api)
 
 ### Functionality
-
+- _webscrape.py_: Contains Functionality for webscraping the 'goodreads' website for quotes related to chosen author. The class is also responsible for writing to the `quotes` directory on the results grabbed. This lowers network latency by caching quotes. 
 - _ImageWriter.py_: Contains Functionality for writing text on predefined images.
 
 - _main.py_: runs sample program to output image
+
+- _authorGenerator.py_: Contains the master list of Authors supported along with a image path for their picture. 
 
 ### How to Run
 
