@@ -11,10 +11,11 @@ CONTRAST_FACTOR = 0.5  # contrast multiplyer
 
 class MyImageWriter:
 
-    def __init__(self, author) -> None:
+    def __init__(self, author, imgpath) -> None:
         # Load Defaults
         self.myFont = ImageFont.truetype('fonts/IBMPlexSerif-Regular.ttf', 48)
-        self.img = Image.open('images\\napolean-bonaparte-adjusted.png')
+        self.img = Image.open(imgpath)
+        self.adjustImage()
         self.MAX_W, self.MAX_H = self.img.size
 
         # Get Quote From Webscraper
@@ -48,3 +49,14 @@ class MyImageWriter:
     # Show image in your default image viewing application.
     def showImage(self) -> None:
         self.img.show()
+
+    # adjust image brightness
+    def adjustImage(self) -> None:
+        print(f"Image Mode is: {self.img.mode}")
+
+        if (self.img.mode != "RGB"):
+            self.img = self.img.convert("RGB")
+
+        filter = ImageEnhance.Brightness(self.img)
+        newimage = filter.enhance(CONTRAST_FACTOR)
+        self.img = newimage

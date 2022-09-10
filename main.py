@@ -1,6 +1,7 @@
 from src.imageWriter import MyImageWriter
+from src.authorGenerator import getRandomAuthor
 
-
-imageWriter = MyImageWriter("Napoleon Bonaparte")
+author, imgPath = getRandomAuthor()
+imageWriter = MyImageWriter(author, imgPath)
 imageWriter.drawQuote()
 imageWriter.showImage()

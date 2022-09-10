@@ -1,13 +1,17 @@
+from distutils.log import error
 import requests
 from bs4 import BeautifulSoup, NavigableString
 import re
 import random
+import os.path
 # inspired by Sonia Joseph: https://github.com/soniajoseph/goodreads-quotes/blob/master/scraper.py
 
 
 class QuoteWebScraper:
 
+    MAX_STRING_LENGTH = 80
     # Scrapper constructor
+
     def __init__(self, author) -> None:
         self.author = author
         self.all_quotes = []
@@ -18,6 +22,13 @@ class QuoteWebScraper:
 
     def getQuotes(self, quoteNum):
         new_author = self.author.replace(" ", "+")
+
+        # check for file if it exist before webscraping
+        fileExist = self.checkQuoteFile()
+
+        if fileExist:
+            self.readQuotesFromFile()
+            return self.all_quotes
 
         # for each page
         page_num = 1
@@ -48,11 +59,13 @@ class QuoteWebScraper:
                     m = re.search(pattern, outer)
                     final = m.group()
 
-                    if len(final) < 80:
+                    if len(final) < self.MAX_STRING_LENGTH:
                         self.all_quotes.append(final)
                 except:
                     pass
             page_num += 1
+        print(self.all_quotes)
+        self.writeToFile()  # cache contents of the quote list
         return self.all_quotes
 
     def __str__(self) -> str:
@@ -62,6 +75,34 @@ class QuoteWebScraper:
         return output
 
     # Post: return a random Quote
-
     def getRandomQuote(self):
         return random.choice(self.all_quotes)
+
+    # Post: write the contents of quotes to a file, each line being a different quote.
+    def writeToFile(self):
+        myFile = open(f"quotes\\{self.author}.txt", "w")
+        for quote in self.all_quotes:
+            try:
+                myFile.write(quote + "\n")
+            except:
+                print(f"Error Printing line: {quote}")
+        myFile.close()
+        return None
+
+    # Post: read quote contents from file if exist, populate self.quotes
+    def readQuotesFromFile(self):
+        myFile = open(f"quotes\\{self.author}.txt", "r+")
+        while True:
+            line = myFile.readline()
+
+            if not line:
+                break
+
+            self.all_quotes.append(line.strip())
+
+        myFile.close()
+        return None
+
+    # Post: Does a file for the author already exist?
+    def checkQuoteFile(self):
+        return os.path.exists(f"quotes\\{self.author}.txt")
