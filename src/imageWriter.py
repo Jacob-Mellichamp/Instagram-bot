@@ -50,6 +50,9 @@ class MyImageWriter:
     def showImage(self) -> None:
         self.img.show()
 
+    def saveImage(self) -> None:
+        self.img.save('tmp/tmpImage.jpg')
+
     # adjust image brightness
     def adjustImage(self) -> None:
         print(f"Image Mode is: {self.img.mode}")
