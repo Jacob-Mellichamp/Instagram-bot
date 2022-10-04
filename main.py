@@ -7,7 +7,10 @@ imageWriter.drawQuote()
 imageWriter.showImage()
 imageWriter.saveImage()
 
+# Posting the Image to Instagram.
 insta = InstaPublisher()
+caption = """Daily Inspiration to get you through the day  
 
-caption = "testing functionality"
+
+#quoteOftheDay #philosophy #stoicism #business #starcoding #starquotes #quotes #dailymotivation #motivation"""
 insta.publish("./tmp/tmpImage.jpg", caption=caption)
