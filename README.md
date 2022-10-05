@@ -8,19 +8,44 @@ A instagram bot that automatically post a randomized daily quote from a series o
 - Python3
 - [Beautiful Soup Library](https://beautiful-soup-4.readthedocs.io/en/latest/)
 - [PIL Library](https://pillow.readthedocs.io/en/stable/)
-- [Instagram API](https://www.npmjs.com/package/instagram-private-api)
+- [Instabot](https://pypi.org/project/instabot/)
 
 ### Functionality
-- _webscrape.py_: Contains Functionality for webscraping the 'goodreads' website for quotes related to chosen author. The class is also responsible for writing to the `quotes` directory on the results grabbed. This lowers network latency by caching quotes. 
+
+- _webscrape.py_: Contains Functionality for webscraping the 'goodreads' website for quotes related to chosen author. The class is also responsible for writing to the `quotes` directory on the results grabbed. This lowers network latency by caching quotes.
 - _ImageWriter.py_: Contains Functionality for writing text on predefined images.
 
 - _main.py_: runs sample program to output image
 
-- _authorGenerator.py_: Contains the master list of Authors supported along with a image path for their picture. 
+- _authorGenerator.py_: Contains the master list of Authors supported along with a image path for their picture.
+
+- _instaPublisher.py_: Initializes the `instabot` library and handles any instagram specific logic
 
 ### How to Run
+
+1. **Set up instagram configuration variables**
+
+- Create a `config.py` file in the project's root directory.
+- define the following variables:
+
+```
+USERNAME = '<your username>'
+PASSWORD = '<your password>'
+```
+
+2. **Run the Application**
 
 ```
 pip install -m requirements.txt
 python3 ./main.py
 ```
+
+3. **Post Instagram API Connection**
+
+- After you successfully post an image, a `config/` folder is automatically created in the root directory by the `instabot` library. This is because the API attempts to save your access token to login again automatically.
+- That functionality does not work however, and you will experience an error if the application tries to login using the cached access token.
+- **Solution: delete the created folder before posting again.**
+
+## Additional Notes
+
+The webscrape.py grabs raw data from `www.goodread.com` sometimes this input is... not ASCII friendly, you might have to do so manual data cleansing on the quotes your application grabs. (that is if you add additional authors to this project)
